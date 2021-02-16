@@ -28,20 +28,20 @@ services:
         nginx['client_max_body_size'] = '0'
       # Add any other gitlab.rb configuration here, each on its own line
     ports:
-      - '192.168.111.4:8081:80'
-      - '192.168.111.4:8443:443'
-      - '192.168.111.4:3322:22'
-      - '192.168.111.4:9090:9090' #Prometheus listen port
-      - '192.168.111.4:9168:9168' #Gitlab exporter
-      - '192.168.111.4:9236:9236' #Prometheus exporter
-      - '192.168.111.4:9101:9100' #Node exporter
-      - '192.168.111.4:9121:9121' #Redis exporter
-      - '192.168.111.4:9187:9187' #Psql exporter
-      - '192.168.111.4:8060:8060' #Nginx 
-      - '192.168.111.4:8082:8082' #Sidekiq exporter
+      - '<Host IP:Port>:80'
+      - '<Host IP:Port>:443'
+      - '<Host IP:Port>:22'
+      - '<Host IP:Port>:9090' #Prometheus listen port
+      - '<Host IP:Port>:9168' #Gitlab exporter
+      - '<Host IP:Port>:9236' #Prometheus exporter
+      - '<Host IP:Port>:9100' #Node exporter
+      - '<Host IP:Port>:9121' #Redis exporter
+      - '<Host IP:Port>:9187' #Psql exporter
+      - '<Host IP:Port>:8060' #Nginx 
+      - '<Host IP:Port>:8082' #Sidekiq exporter
     volumes:
-      - '/home/administrator/dockers/gitlab/config:/etc/gitlab'
-      - '/home/administrator/dockers/gitlab/logs:/var/log/gitlab'
-      - '/home/administrator/dockers/gitlab/data:/var/opt/gitlab'     
-      - '/home/administrator/dockers/gitlab/volume_data/ssl:/etc/ssl/certs/gitlab'
+      - '<Gitlab Working Directory>/config:/etc/gitlab'
+      - '<Gitlab Working Directory>/logs:/var/log/gitlab'
+      - '<Gitlab Working Directory>/data:/var/opt/gitlab'     
+      - '<Gitlab Working Directory>/volume_data/ssl:/etc/ssl/certs/gitlab'
 
