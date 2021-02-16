@@ -1,4 +1,4 @@
-# Gitlab Container Image
+# Deploying Gitlab on local machine
 ## Getting Started
  - OS: Ubuntu 16.04/18.04
  - Binaries: docker, docker-compose
@@ -11,7 +11,25 @@
 
 ## Document for Package defaults
  - https://docs.gitlab.com/omnibus/package-information/defaults.html
+ 
+## Certificate Generation
+ - You may refer to the steps that I did by using our client(PC) as Certificate Authority. There are more detailed explainations online for topics related to certificates, especially when you want to use it to enable HTTPs protocol for other applications.
+``` bash
+# Generate private key. This would prompt you to enter a pass phrase and reconfirm again.**
+ - $ openssl genrsa -des3 -out myCA.key 4096 # Enter pass phrase for myCA.key
 
+# Generate root certificate (.pem) 
+ - $ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem
+
+# Generate a secure server key for GoHarbor."
+ - $ sudo openssl genrsa -out gitlab.io.key 4096
+
+# Generate the certificate signing request file taking reference from my configuration file req.conf
+ - $ sudo openssl req -new -key gitlab.io.key -out gitlab.io.csr -config req.conf
+
+# Create the signed certificate for GoHarbor using the our Cert Authority certificate and keys with the GoHarbor signing request"
+ - $ sudo openssl x509 -req -in gitlab.io.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out gitlab.io.crt -days 3650 -sha256
+```
 ## Starting and stopping Gitlab from the Gitlab folder
 ### To bring up:
  - $ sudo docker-compose up
@@ -37,7 +55,7 @@
   - '8060:8060' **NGINX health-check endpoint**
   - '8082:8082' **Sidekiq exporter (background job processor GitLab uses to asynchronously run tasks). Sidekiq requires connection to the Redis, PostgreSQL and Gitaly instances**
 
-### Note: Based on https://docs.gitlab.com/omnibus/package-information/defaults.html, the list ports for the exporters(Gitlab,Node,Redis,Psql and Sidekiq are enabled).
-
 ### Configure environment settings by GITLAB_OMNIBUS_CONFIG in docker-compose.yaml. Put 0.0.0.0 as IP placeholder for convenience, which also means all IPv4 addresses on the local machine. Refer to GITLAB omnibus webpage ref: https://docs.gitlab.com/omnibus/docker/README.html on the configuration needed for installing gitlab. The configuration defined in GITLAB_OMNIBUS_CONFIG affects the file /etc/gitlab/gitlab.rb in gitlab container.
 
+
+### Note: Based on https://docs.gitlab.com/omnibus/package-information/defaults.html, the list ports for the exporters(Gitlab,Node,Redis,Psql and Sidekiq are enabled).The "Create_CA" folder provides my self-signed certificates(expires until 2030) to enable the https protocol for Gitlab. By default, if https is enabled for GoHarbor, it would automatically route http request to https instead, assuming you are using port 80 and 443 for http and https port respectively. If you are not intending to enable https for Gitlab, no certificate is required and please rename the external url to http and remove nginx related entries under GITLAB_OMNIBUS_CONFIG
