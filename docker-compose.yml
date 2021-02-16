@@ -1,0 +1,47 @@
+version: '3'
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ce:13.0.6-ce.0'
+    container_name: 'gitlab-ce'
+    restart: always
+    hostname: 'gitlab'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.io'
+        prometheus['listen_address'] = "0.0.0.0:9090"
+        prometheus['enable'] = true
+        gitaly['prometheus_listen_addr'] = "0.0.0.0:9236"
+        node_exporter['listen_address'] = "0.0.0.0:9101"
+        redis_exporter['listen_address'] = "0.0.0.0:9121"
+        postgres_exporter['listen_address'] = "0.0.0.0:9187"
+        gitlab_rails['time_zone'] = "Asia/Singapore"
+        gitlab_rails['backup_keep_time'] = 172800   
+        grafana['admin_password'] = "Passw0rd"
+        grafana['enable'] = true
+        letsencrypt['enable'] = false
+        letsencrypt['auto_renew'] = false
+        nginx['listen_port'] = 443
+        nginx['redirect_http_to_https'] = true
+        nginx['ssl_certificate'] = "/etc/ssl/certs/gitlab/gitlab.io.crt"
+        nginx['ssl_certificate_key'] = "/etc/ssl/certs/gitlab/gitlab.io.key"
+        nginx['ssl_protocols'] = "TLSv1.1 TLSv1.2"
+        nginx['client_max_body_size'] = '0'
+      # Add any other gitlab.rb configuration here, each on its own line
+    ports:
+      - '192.168.111.4:8081:80'
+      - '192.168.111.4:8443:443'
+      - '192.168.111.4:3322:22'
+      - '192.168.111.4:9090:9090' #Prometheus listen port
+      - '192.168.111.4:9168:9168' #Gitlab exporter
+      - '192.168.111.4:9236:9236' #Prometheus exporter
+      - '192.168.111.4:9101:9100' #Node exporter
+      - '192.168.111.4:9121:9121' #Redis exporter
+      - '192.168.111.4:9187:9187' #Psql exporter
+      - '192.168.111.4:8060:8060' #Nginx 
+      - '192.168.111.4:8082:8082' #Sidekiq exporter
+    volumes:
+      - '/home/administrator/dockers/gitlab/config:/etc/gitlab'
+      - '/home/administrator/dockers/gitlab/logs:/var/log/gitlab'
+      - '/home/administrator/dockers/gitlab/data:/var/opt/gitlab'     
+      - '/home/administrator/dockers/gitlab/volume_data/ssl:/etc/ssl/certs/gitlab'
+

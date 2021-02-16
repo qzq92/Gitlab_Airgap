@@ -1,0 +1,16 @@
+[Unit]
+Description=Gitlab Service
+After=docker.service systemd-networkd.service systemd-resolved.service
+Requires=docker.service
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5
+WorkingDirectory=<working directory for gitlab>
+ExecStart=/usr/local/bin/docker-compose up --remove-orphans
+TimeoutStopSec=180
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+#Be tiny Cert Authority
+#Generate private key.
+openssl genrsa -des3 -out myCA.key 4096 # Enter pass phrase for myCA.key
+
+#Generate root certificate
+openssl req -x509 -new -nodes -key myCA.key -sha256 -days 3650 -out myCA.pem
+
+
+#echo "Generate a secure server key."
+sudo openssl genrsa -out gitlab.io.key 4096
+
+#echo "Generate the certificate signing request."
+sudo openssl req -new -key gitlab.io.key -out gitlab.io.csr -config req.conf
+
+#echo "Create the signed certificate"
+sudo openssl x509 -req -in gitlab.io.csr -CA myCA.pem -CAkey myCA.key -CAcreateserial -out gitlab.io.crt -days 3650 -sha256
+
+
+#echo "Copying certs to created directory"
+sudo cp gitlab.io.key gitlab.io.crt  ../volume_data/ssl
+
+
