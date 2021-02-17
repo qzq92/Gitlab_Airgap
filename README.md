@@ -13,7 +13,7 @@
  - https://docs.gitlab.com/omnibus/package-information/defaults.html
  
 ## Certificate Generation
- - You may refer to the steps that I did by using our client(PC) as Certificate Authority. There are more detailed explainations online for topics related to certificates, especially when you want to use it to enable HTTPs protocol for other applications.
+ - You may refer to the steps that I did by using your client as Certificate Authority. There are more detailed explainations online for topics related to certificates, especially when you want to use it to enable HTTPs protocol for other applications.
 ``` bash
 # Generate private key. This would prompt you to enter a pass phrase and reconfirm again.**
  - $ openssl genrsa -des3 -out myCA.key 4096 # Enter pass phrase for myCA.key
