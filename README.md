@@ -6,10 +6,10 @@
  - Main doc for basic using docker-compose for gitlab
  - Ref: https://docs.gitlab.com/omnibus/docker/#install-gitlab-using-docker-engine
 
-## Document for parameters configuration for Gitlab
+## Reference for parameters configuration for Gitlab
  - https://docs.gitlab.com/omnibus/settings/README.html
 
-## Document for Package defaults
+## Reference for Package defaults
  - https://docs.gitlab.com/omnibus/package-information/defaults.html
  
 ## Certificate Generation
@@ -58,4 +58,4 @@
 ### Configure environment settings by GITLAB_OMNIBUS_CONFIG in docker-compose.yaml. Put 0.0.0.0 as IP placeholder for convenience, which also means all IPv4 addresses on the local machine. Refer to GITLAB omnibus webpage ref: https://docs.gitlab.com/omnibus/docker/README.html on the configuration needed for installing gitlab. The configuration defined in GITLAB_OMNIBUS_CONFIG affects the file /etc/gitlab/gitlab.rb in gitlab container.
 
 
-### Note: Based on https://docs.gitlab.com/omnibus/package-information/defaults.html, the list ports for the exporters(Gitlab,Node,Redis,Psql and Sidekiq are enabled).The "Create_CA" folder provides my self-signed certificates(expires until 2030) to enable the https protocol for Gitlab. By default, if https is enabled for GoHarbor, it would automatically route http request to https instead, assuming you are using port 80 and 443 for http and https port respectively. If you are not intending to enable https for Gitlab, no certificate is required and please rename the external url to http and remove nginx related entries under GITLAB_OMNIBUS_CONFIG
+### Note: From the reference online: https://docs.gitlab.com/omnibus/package-information/defaults.html, the list ports for the exporters (Gitlab,Node,Redis,Psql and Sidekiq are enabled).The "Create_CA" folder provides my self-signed certificates(expires until 2030) to enable the https protocol for Gitlab. By default, if https is enabled for GoHarbor, it would automatically route http request to https instead, assuming you are using port 80 and 443 for http and https port respectively. If you are not intending to enable https for Gitlab, no certificate is required and please rename the external url to http and remove nginx related entries under GITLAB_OMNIBUS_CONFIG
