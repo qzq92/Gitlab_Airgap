@@ -39,7 +39,7 @@ Attached .odt file is my personal documentation on the setup of local Gitlab rep
 ### To bring down:
  - $ sudo docker-compose down
 
-### Volumes required:
+### Docker volumes required:
   - '<Gitlab_folder_path>/config:/etc/gitlab' **Directory containing configurations related to gitlab**
   - '<Gitlab_folder_path>/logs:/var/log/gitlab' **Directory storing gitlab logs**
   - '<Gitlab_folder_path>/data:/var/opt/gitlab' **Directory storing gitlab related data**
@@ -63,4 +63,6 @@ Configure environment settings by GITLAB_OMNIBUS_CONFIG in docker-compose.yaml. 
 
 
 ## Notes 
-From the reference online: https://docs.gitlab.com/omnibus/package-information/defaults.html, the list ports for the exporters (Gitlab,Node,Redis,Psql and Sidekiq are enabled). By default, if https is enabled for GoHarbor, it would automatically route http request to https instead, assuming you are using port 80 and 443 for http and https port respectively. If you are not intending to enable https for Gitlab, no certificate is required and please rename the external url to http and remove nginx related entries under GITLAB_OMNIBUS_CONFIG
+From the reference online: https://docs.gitlab.com/omnibus/package-information/defaults.html, the list ports for the exporters (Gitlab,Node,Redis,Psql and Sidekiq are enabled). By default, if https is enabled for Gitlab, it would automatically route http request to https instead, assuming you are using port 80 and 443 for http and https port respectively. If you are not intending to enable https for Gitlab, no certificate is required and please rename the external url to http and remove nginx related entries under GITLAB_OMNIBUS_CONFIG. 
+
+In the Create_CA folder, I have included a sample **req.conf** file that is used for cert generation as referenced in the list of commands stated in the **Procedure** file which you can take reference to. For security purposes, I would not be providing any sample certificates or key files for your use. Please generate yourself.
