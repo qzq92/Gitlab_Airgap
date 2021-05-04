@@ -6,6 +6,9 @@
  - Main doc for basic using docker-compose for gitlab
  - Ref: https://docs.gitlab.com/omnibus/docker/#install-gitlab-using-docker-engine
 
+## Documentation
+Attached .odt file is my personal documentation on the setup of local Gitlab repository, which also includes how to link up Gitlab with Windows AD, as well as backing up of data and generation of certs for use of HTTPs protocol.
+
 ## Reference for parameters configuration for Gitlab
  - https://docs.gitlab.com/omnibus/settings/README.html
 
